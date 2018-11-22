@@ -2,6 +2,8 @@
 
 ReactNative app for api https://github.com/Bastiani/ezoom-backend (app) (Ezoom challenge)
 
+![](https://github.com/Bastiani/ezoom-app/blob/master/docs/app.gif?raw=true)
+
 ## Install Watchman
 
 - [Watchman](https://facebook.github.io/watchman/docs/install.html#installing-from-source)
