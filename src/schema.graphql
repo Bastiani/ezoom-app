@@ -1,0 +1,215 @@
+# Category type definition
+type Category implements Node {
+  # The ID of an object
+  id: ID!
+
+  # Titulo of the category
+  title: String
+}
+
+input CategoryAddInput {
+  title: String!
+  clientMutationId: String
+}
+
+type CategoryAddPayload {
+  category: Category
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type CategoryConnectionConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [CategoryConnectionEdge]
+  total: Int
+}
+
+# An edge in a connection.
+type CategoryConnectionEdge {
+  # The item at the end of the edge
+  node: Category
+
+  # A cursor for use in pagination
+  cursor: String!
+  index: Int
+}
+
+enum CategoryOrderBy {
+  ID
+  XP
+}
+
+type Mutation {
+  UserLoginMutation(input: UserLoginInput!): UserLoginPayload
+  UserAddMutation(input: UserAddInput!): UserAddPayload
+  CategoryAddMutation(input: CategoryAddInput!): CategoryAddPayload
+  ProductAddMutation(input: ProductAddInput!): ProductAddPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# Product type definition
+type Product implements Node {
+  # The ID of an object
+  id: ID!
+
+  # Titulo of the product
+  title: String
+
+  # Text of the product
+  text: String
+  category: Category
+}
+
+input ProductAddInput {
+  title: String
+  text: String
+  category: Int
+  clientMutationId: String
+}
+
+type ProductAddPayload {
+  product: Product
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type ProductConnectionConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ProductConnectionEdge]
+  total: Int
+}
+
+# An edge in a connection.
+type ProductConnectionEdge {
+  # The item at the end of the edge
+  node: Product
+
+  # A cursor for use in pagination
+  cursor: String!
+  index: Int
+}
+
+enum ProductOrderBy {
+  ID
+  XP
+}
+
+# The root of all... queries
+type Query {
+  # Me is the logged user
+  me(id: Int!): User
+  users(after: String, first: Int, before: String, last: Int, orderBy: [UserOrderBy]): UserConnectionConnection
+
+  # Category
+  category(id: ID!): Category
+  categories(after: String, first: Int, before: String, last: Int, orderBy: [CategoryOrderBy]): CategoryConnectionConnection
+
+  # Product
+  product(id: ID!): Product
+  products(
+    after: String
+    first: Int
+    before: String
+    last: Int
+    orderBy: [ProductOrderBy]
+
+    # id of the category
+    category: ID
+  ): ProductConnectionConnection
+}
+
+# User type definition
+type User implements Node {
+  # The ID of an object
+  id: ID!
+
+  # Name of the user
+  name: String
+
+  # Password of the user
+  password: String
+
+  # Email of the user
+  email: String
+}
+
+input UserAddInput {
+  name: String!
+  password: String
+  email: String!
+  active: Boolean
+  clientMutationId: String
+}
+
+type UserAddPayload {
+  user: User
+  token: String
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type UserConnectionConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [UserConnectionEdge]
+  total: Int
+}
+
+# An edge in a connection.
+type UserConnectionEdge {
+  # The item at the end of the edge
+  node: User
+
+  # A cursor for use in pagination
+  cursor: String!
+  index: Int
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserLoginPayload {
+  token: String
+  error: String
+  clientMutationId: String
+}
+
+enum UserOrderBy {
+  ID
+  XP
+}
+
